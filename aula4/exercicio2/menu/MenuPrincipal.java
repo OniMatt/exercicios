@@ -50,7 +50,7 @@ public class MenuPrincipal {
     System.out.println("| 2. Listagem simples.       |");
     System.out.println("| 3. Produtos à venda.       |");
     System.out.println("| 4. Venda.                  |");
-    System.out.println("| 5. Sair.                  |");
+    System.out.println("| 5. Sair.                   |");
     System.out.println("|                            |");
     System.out.println(" =============================");
 
