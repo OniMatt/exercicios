@@ -162,4 +162,15 @@ public class Teclado {
     }
     return (a);
   }
+
+  public static void pressioneEnter() {
+    leString("Pressione Enter para continuar.");
+    System.out.print( "\033[H\033[2J" );
+  }
+
+  public static void pressioneEnter(String msg) {
+    leString(msg);
+    System.out.print( "\033[H\033[2J" );
+  }
+
 }
