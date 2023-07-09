@@ -1,8 +1,9 @@
-package aula4.exercicio3.pedido;
+package aula4.exercicio3.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import aula4.exercicio3.cliente.Cliente;
+
+import aula4.exercicio3.enumeration.StatusEnum;
 
 public class Pedido {
   private List<Produto> produtosPedido;

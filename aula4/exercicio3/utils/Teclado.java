@@ -1,4 +1,4 @@
-package aula4.exercicio3.teclado;
+package aula4.exercicio3.utils;
 
 import java.io.*;
 

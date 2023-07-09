@@ -1,12 +1,14 @@
 package aula4.exercicio3;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
-import aula4.exercicio3.cliente.Cliente;
-import aula4.exercicio3.pedido.*;
-import aula4.exercicio3.teclado.Teclado;
+import aula4.exercicio3.domain.Cliente;
+import aula4.exercicio3.domain.Pedido;
+import aula4.exercicio3.domain.Produto;
+import aula4.exercicio3.enumeration.*;
+import aula4.exercicio3.utils.Teclado;
 
 public class Hamburgueria {
   private String nome;
@@ -17,29 +19,37 @@ public class Hamburgueria {
   public Hamburgueria( String nome ) {
     this.nome = nome;
     cardapio = Produto.inicializaProdutos();
-    clientes = new ArrayList<>();
-    pedidos = new ArrayList<>();
   }
 
   public Hamburgueria() {
   }
 
-  public Cliente cadastraCliente() {
-    String nome = Teclado.leString( "Digite o nome do cliente: " );
-    String email = Teclado.leString( "Digite o e-mail do cliente: " );
-    System.out.println();
-    Cliente cliente = new Cliente( nome, email );
+  public Optional < Cliente > cadastraCliente() {
+    if( getPedidos().size() >= 50 ) {
+      System.out.println( "Chegamos ao limite de pedidos por hoje" );
+      Teclado.pressioneEnter();
+      return Optional.empty();
+    }
+
+    Cliente cliente = new Cliente(
+      Teclado.leString( "Digite o nome do cliente: " ),
+      Teclado.leString( "Digite o e-mail do cliente: " )
+    );
 
     clientes.add( cliente );
     System.out.print( "\033[H\033[2J" );
-    return cliente;
+    return Optional.of(cliente);
   }
 
-  public Pedido criaPedido( Cliente cliente ) {
+  public void criaPedido( Cliente cliente ) {
+    if( getPedidos().size() >= 50 ) {
+      System.out.println( "Chegamos ao limite de pedidos por hoje" );
+      Teclado.pressioneEnter();
+      return;
+    }
     Pedido pedido = new Pedido( StatusEnum.EM_PREPARO, cliente );
-
-    System.out.println( "Criação de pedido: " );
     boolean encerrado = false;
+    System.out.println( "Criação de pedido: " );
 
     while (!encerrado) {
       imprimeCardapio();
@@ -57,10 +67,14 @@ public class Hamburgueria {
       System.out.print( "\033[H\033[2J" );
     }
     pedidos.add( pedido );
-    return pedido;
   }
 
   public void atualizaPedido() {
+    if( pedidos.isEmpty() ) {
+      System.out.println( "Ainda não temos pedidos para atualizar." );
+      Teclado.pressioneEnter();
+      return;
+    } 
     imprimePedidos();
     int opcao = Teclado.leInt("Escolha um pedido para atualizar. " );
     Pedido pedido = pedidos.get( opcao - 1 );
@@ -73,17 +87,20 @@ public class Hamburgueria {
         System.out.println( "O pedido está em preparo" );
         System.out.println( "Enviado e-mail para " + pedido.getCliente().getEmail() );
         break;
+
       case ( 2 ):
         pedido.setStatus( StatusEnum.EM_TRANSITO );
         System.out.println( "O pedido saiu para entrega");
         System.out.println( "Enviado e-mail para " + pedido.getCliente().getEmail() );
         break;
+        
       case ( 3 ):
         pedido.setStatus( StatusEnum.ENTREGUE );
         System.out.println( "O pedido foi entregue!" );
         System.out.println( "Enviado e-mail para " + pedido.getCliente().getEmail() );
         pedidos.remove( pedido );
     }
+    Teclado.pressioneEnter();
   }
 
   public void imprimeCardapio() {
@@ -96,17 +113,18 @@ public class Hamburgueria {
         .forEach( i -> System.out.printf( "%d. %s.%n", i + 1, pedidos.get( i ).toString() ) );
   }
 
-  public Cliente getCliente() {
-    if ( !clientes.isEmpty() ) {
-      System.out.println( "Clientes: " );
-      IntStream.range( 0, clientes.size() )
-          .forEach( i -> System.out.printf( "%d. %s", ( i + 1 ), clientes.get( i ).toString() ) );
-
-      int opcao = Teclado.leInt( "Escolha um cliente." );
-      return clientes.get( opcao - 1 );
-    } else
+  public Optional< Cliente > getCliente() {
+    if( clientes.isEmpty() ) {
       System.out.println( "Não temos clientes ainda." );
-    return null;
+      Teclado.pressioneEnter();
+      return Optional.empty();
+    }
+    System.out.println( "Clientes: " );
+    IntStream.range( 0, clientes.size() )
+        .forEach( i -> System.out.printf( "%d. %s", ( i + 1 ), clientes.get( i ).toString() ) );
+    int opcao = Teclado.leInt( "Escolha um cliente." );
+    Optional< Cliente > cliente = Optional.of( clientes.get( opcao - 1 ) );
+    return cliente;
   }
 
   public String getNome() {

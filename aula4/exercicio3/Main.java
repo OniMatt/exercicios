@@ -1,6 +1,6 @@
 package aula4.exercicio3;
 
-import aula4.exercicio3.ui.MenuPrincipal;
+import aula4.exercicio3.business.menuPrincipal.MenuPrincipal;
 
 public class Main {
   public static void main( String[] args ) {

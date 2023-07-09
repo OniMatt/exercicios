@@ -1,9 +1,10 @@
-package aula4.exercicio3.ui;
+package aula4.exercicio3.business.menuPrincipal;
 
-import aula4.exercicio3.teclado.Teclado;
+import java.util.Optional;
 
 import aula4.exercicio3.Hamburgueria;
-import aula4.exercicio3.cliente.Cliente;
+import aula4.exercicio3.domain.Cliente;
+import aula4.exercicio3.utils.Teclado;
 
 public class MenuPrincipal {
   static Hamburgueria h = new Hamburgueria( "McSyo" );
@@ -15,46 +16,37 @@ public class MenuPrincipal {
       imprimeMenuPrincipal();
 
       int opcao = Teclado.leInt( "Escolha uma opção." );
-      // acho q ta tudo errado e o pedido tem que ser criado na hamburgueria
       switch ( opcao ) {
         case ( 1 ):
-          if( h.getPedidos().size() >= 50 ) {
-            System.out.println( "Chegamos ao limite de pedidos por hoje" );
-            Teclado.pressioneEnter();
-          } else {
-          Cliente clienteTemp = h.cadastraCliente();
+          Cliente clienteTemp = h.cadastraCliente().get();
           boolean criarPedido = Teclado.leBoolean( "Deseja criar um pedido para este cliente? " );
           if ( criarPedido )
             h.criaPedido( clienteTemp );
-          }
           break;
+
         case ( 2 ):
-          if( h.getPedidos().size() >= 50 ) {
-            System.out.println( "Chegamos ao limite de pedidos por hoje" );
-            Teclado.pressioneEnter();
-          } else {
-            if ( !h.getClientes().isEmpty() ) {
-              Cliente clienteExistente = h.getCliente();
-              h.criaPedido( clienteExistente );
-            } else
-              System.out.println( "Você precisar ter clientes para montar um pedido." );
-            Teclado.pressioneEnter();
-          }
-          break;
-        case ( 3 ):
-          if ( !h.getPedidos().isEmpty() ) {
-            h.atualizaPedido();
-          } else
-            System.out.println( "Ainda não temos pedidos para atualizar." );
+          Optional< Cliente > clienteTemp2 = h.getCliente();
+          if ( !clienteTemp2.isPresent() ) {
+            break;
+          } 
+          h.criaPedido( clienteTemp2.get() );
           Teclado.pressioneEnter();
           break;
+
+        case ( 3 ):
+          h.atualizaPedido();
+          break;
+
         case ( 4 ):
+          break;
+
+        case ( 5 ):
           System.exit( 0 );
+
         default:
           Teclado.pressioneEnter( "Opção inválida, pressione Enter para continuar." );
       }
     }
-
   }
 
   public static void imprimeMenuPrincipal() {
@@ -63,7 +55,8 @@ public class MenuPrincipal {
     System.out.println( "| 1. Cadastrar cliente.      |" );
     System.out.println( "| 2. Montar pedido.          |" );
     System.out.println( "| 3. Atualiza pedido.        |" );
-    System.out.println( "| 4. Fechar.                 |" );
+    System.out.println( "| 4. Interface do cliente.   |" );
+    System.out.println( "| 5. Fechar.                 |" );
     System.out.println( "|                            |" );
     System.out.println( " =============================" );
   }
