@@ -1,7 +1,9 @@
 package aula4.exercicio3;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import aula4.exercicio3.domain.Cliente;
@@ -13,12 +15,14 @@ import aula4.exercicio3.utils.Teclado;
 public class Hamburgueria {
   private String nome;
   private List<Produto> cardapio;
-  private List<Cliente> clientes;
-  private List<Pedido> pedidos;
+  private static List<Cliente> clientes;
+  private static List<Pedido> pedidos;
 
   public Hamburgueria( String nome ) {
     this.nome = nome;
     cardapio = Produto.inicializaProdutos();
+    Hamburgueria.clientes = new ArrayList< Cliente >(); 
+    Hamburgueria.pedidos = new ArrayList< Pedido >();
   }
 
   public Hamburgueria() {
@@ -33,6 +37,7 @@ public class Hamburgueria {
 
     Cliente cliente = new Cliente(
       Teclado.leString( "Digite o nome do cliente: " ),
+      Teclado.leString("Digite o seu número de telefone"),
       Teclado.leString( "Digite o e-mail do cliente: " )
     );
 
@@ -93,7 +98,7 @@ public class Hamburgueria {
         System.out.println( "O pedido saiu para entrega");
         System.out.println( "Enviado e-mail para " + pedido.getCliente().getEmail() );
         break;
-        
+
       case ( 3 ):
         pedido.setStatus( StatusEnum.ENTREGUE );
         System.out.println( "O pedido foi entregue!" );
@@ -127,6 +132,29 @@ public class Hamburgueria {
     return cliente;
   }
 
+  public static Optional< Cliente > getClienteByEmail( String email ) {
+    if( clientes.isEmpty() ) {
+      System.out.println( "Ainda não temos clientes." );
+      return Optional.empty();
+    }
+    Optional< Cliente > cliente = clientes.stream()
+      .filter( c -> c.getEmail().equals(email) )
+      .findFirst();
+    
+    if( !cliente.isPresent() ) {
+      System.out.println("Não foi encontrado cliente com o e-mail: " + email);
+      return Optional.empty();
+    }
+
+    return cliente;
+  }
+
+  public static List< Pedido > getClientePedidos(Cliente cliente) {
+    return pedidos.stream()
+      .filter( p -> p.getCliente().equals(cliente) )
+      .collect(Collectors.toList());
+  }
+
   public String getNome() {
     return nome;
   }
@@ -144,7 +172,7 @@ public class Hamburgueria {
   }
 
   public void setClientes( List<Cliente> clientes ) {
-    this.clientes = clientes;
+    Hamburgueria.clientes = clientes;
   }
 
   public List<Pedido> getPedidos() {
@@ -152,7 +180,7 @@ public class Hamburgueria {
   }
 
   public void setPedidos( List<Pedido> pedidos ) {
-    this.pedidos = pedidos;
+    Hamburgueria.pedidos = pedidos;
   }
 
 }

@@ -41,7 +41,7 @@ public class MenuPrincipal {
           break;
 
         case ( 5 ):
-          System.exit( 0 );
+          return;
 
         default:
           Teclado.pressioneEnter( "Opção inválida, pressione Enter para continuar." );

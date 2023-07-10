@@ -1,11 +1,16 @@
 package aula4.exercicio3.enumeration;
 
 public enum StatusEnum {
-  EM_PREPARO,
-  EM_TRANSITO,
-  ENTREGUE,
-  CANCELADO;
+  EM_PREPARO("Em preparo"),
+  EM_TRANSITO("Saiu para entrega"),
+  ENTREGUE("Entregue"),
+  CANCELADO("Cancelado");
 
+  public final String texto;
+
+  private StatusEnum(String texto) {
+    this.texto = texto;
+  }
   public static void imprimeStatus() {
     System.out.println( "1. Em preparo" );
     System.out.println( "2. Saiu para entrega" );
