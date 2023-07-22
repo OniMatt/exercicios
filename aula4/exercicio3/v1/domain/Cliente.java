@@ -1,4 +1,4 @@
-package aula4.exercicio3.domain;
+package aula4.exercicio3.v1.domain;
 
 public class Cliente {
   private String nome;

@@ -1,4 +1,4 @@
-package aula4.exercicio3;
+package aula4.exercicio3.v1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import aula4.exercicio3.domain.Cliente;
-import aula4.exercicio3.domain.Pedido;
-import aula4.exercicio3.domain.Produto;
-import aula4.exercicio3.enumeration.*;
-import aula4.exercicio3.utils.Teclado;
+import aula4.exercicio3.v1.domain.Cliente;
+import aula4.exercicio3.v1.domain.Pedido;
+import aula4.exercicio3.v1.domain.Produto;
+import aula4.exercicio3.v1.enumeration.*;
+import aula4.exercicio3.v1.utils.Teclado;
 
 public class Hamburgueria {
   private String nome;

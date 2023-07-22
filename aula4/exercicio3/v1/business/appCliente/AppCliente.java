@@ -1,15 +1,15 @@
-package aula4.exercicio3.business.appCliente;
+package aula4.exercicio3.v1.business.appCliente;
 
-import aula4.exercicio3.utils.Teclado;
+import aula4.exercicio3.v1.utils.Teclado;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import aula4.exercicio3.Hamburgueria;
-import aula4.exercicio3.domain.Cliente;
-import aula4.exercicio3.domain.Pedido;
-import aula4.exercicio3.enumeration.StatusEnum;
+import aula4.exercicio3.v1.Hamburgueria;
+import aula4.exercicio3.v1.domain.Cliente;
+import aula4.exercicio3.v1.domain.Pedido;
+import aula4.exercicio3.v1.enumeration.StatusEnum;
 
 public class AppCliente {
 

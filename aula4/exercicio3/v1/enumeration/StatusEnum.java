@@ -1,4 +1,4 @@
-package aula4.exercicio3.enumeration;
+package aula4.exercicio3.v1.enumeration;
 
 public enum StatusEnum {
   EM_PREPARO("Em preparo"),

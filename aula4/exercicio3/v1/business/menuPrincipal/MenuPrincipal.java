@@ -1,10 +1,10 @@
-package aula4.exercicio3.business.menuPrincipal;
+package aula4.exercicio3.v1.business.menuPrincipal;
 
 import java.util.Optional;
 
-import aula4.exercicio3.Hamburgueria;
-import aula4.exercicio3.domain.Cliente;
-import aula4.exercicio3.utils.Teclado;
+import aula4.exercicio3.v1.Hamburgueria;
+import aula4.exercicio3.v1.domain.Cliente;
+import aula4.exercicio3.v1.utils.Teclado;
 
 public class MenuPrincipal {
   static Hamburgueria h = new Hamburgueria( "McSyo" );
